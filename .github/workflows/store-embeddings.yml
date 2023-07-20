@@ -1,0 +1,23 @@
+name: Store embeddings
+on:
+  workflow_dispatch:
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          cache: pip
+      - name: Install requirements
+        run: pip install -r requirements.txt
+      - name: Generate links
+        run: python3 generate_links.py
+      - name: Show links
+        run: cat links.txt
+      - name: Create and store embeddings
+        run: python3 links_to_docs.py
+        env:
+          ROCKSET_API_KEY: ${{ secrets.ROCKSET_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
