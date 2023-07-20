@@ -27,6 +27,7 @@ class Scraper():
     
     def __init__(self):
         setrecursionlimit(1000000)
+        self.cnt = 0
         self.link_file = open("links.txt", "w+")
         self.scraped_links = set()
         self.scrape("https://zelda.fandom.com/wiki/Main_Page")
@@ -34,6 +35,8 @@ class Scraper():
         print(len(self.scraped_links))
     
     def scrape(self, link):
+        if (self.cnt > 5000):
+            return
         print(f"Scraping {link} ...")
         try:
             soup = BeautifulSoup(get(link).text, "html.parser")
