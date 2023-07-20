@@ -1,12 +1,46 @@
+from sys import argv
+from time import sleep
 from os import getenv
-from rockset import RocksetClient, Regions
+from rockset import RocksetClient, Regions, exceptions
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import Rockset as RocksetStore
+from sql import ingest_tranformation
 
 rockset_api_key = getenv("ROCKSET_API_KEY")
 openai_api_key = getenv("OPENAI_API_KEY")
 
 rockset = RocksetClient(Regions.rs2, rockset_api_key)
+
+def collection_exists():
+    try:
+        rockset.Collections.get(collection="hyrule-compendium-ai")
+    except exceptions.NotFoundException:
+        return False
+    return True
+
+def collection_is_ready():
+    return rockset.Collections.get(collection="hyrule-compendium-ai").data.status == "READY"
+
+def delete_collection():
+    print("Deleting collection \"commons.hyrule-compendium-ai\"")
+    rockset.Collections.delete(collection="hyrule-compendium-ai")
+    
+def create_collection():
+    print("Creating collection \"commons.hyrule-compendium-ai\"")
+    rockset.Collections.create_s3_collection(name="hyrule-compendium-ai", field_mapping_query=ingest_tranformation)
+
+if "--reset" in argv:
+    if collection_exists():
+        delete_collection()
+        while collection_exists():
+            sleep(1)
+            
+    create_collection()
+    while not collection_exists():
+        sleep(1)
+    while not collection_is_ready():
+        sleep(1)
+
 openai = OpenAIEmbeddings(
     openai_api_key=openai_api_key,
     model="text-embedding-ada-002"
@@ -18,6 +52,3 @@ store = RocksetStore(
     "text",
     "embedding"
 )
-
-# test connectivity
-store.add_texts(["Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."])
