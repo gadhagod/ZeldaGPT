@@ -5,13 +5,14 @@ from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import Rockset as RocksetStore
 from sql import ingest_tranformation
 
+is_production = getenv("ENVIRONMENT") == "prod"
 rockset_api_server = getenv("ROCKSET_API_SERVER")
 rockset_api_key = getenv("ROCKSET_API_KEY")
 openai_api_key = getenv("OPENAI_API_KEY")
 
 rockset = RocksetClient(rockset_api_server, rockset_api_key)
 
-class EmbeddingCollection:
+class Collection:
     def __init__(self, workspace, name):
         self.workspace = workspace
         self.name = name
@@ -34,11 +35,19 @@ class EmbeddingCollection:
         print(f"Creating collection \"{self.workspace}.{self.name}\"")
         rockset.Collections.create_s3_collection(name=self.name, field_mapping_query=ingest_tranformation)
         
+    def add_doc(self, doc):
+        rockset.Documents.add_documents(
+            collection=self.name,
+            data=[doc]
+        )
+    
     @property
     def created_at(self):
         return datetime.strptime(rockset.Collections.get(collection=self.name).data.created_at, "%Y-%m-%dT%H:%M:%SZ").strftime("%x")
+    
 
-collection = EmbeddingCollection("commons", "hyrule-compendium-ai")
+embeddingCollection = Collection("commons", "hyrule-compendium-ai")
+questionCollection = Collection("commons", "zeldagpt-questions") if is_production else None
 
 openai = OpenAIEmbeddings(
     openai_api_key=openai_api_key,
@@ -47,7 +56,7 @@ openai = OpenAIEmbeddings(
 store = RocksetStore(
     rockset,
     openai,
-    f"\"{collection.name}\"",
+    f"\"{embeddingCollection.name}\"",
     "text",
     "embedding"
 )

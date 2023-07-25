@@ -3,18 +3,18 @@ from time import sleep
 from requests import get, exceptions
 from bs4 import BeautifulSoup
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from constants import store, collection, rockset as rs
+from constants import store, embeddingCollection, rockset as rs
 
 if "--reset" in argv:
-    if collection.exists():
-        collection.delete()
-        while collection.exists():
+    if embeddingCollection.exists():
+        embeddingCollection.delete()
+        while embeddingCollection.exists():
             sleep(1)
             
-    collection.create()
-    while not collection.exists():
+    embeddingCollection.create()
+    while not embeddingCollection.exists():
         sleep(1)
-    while not collection.is_ready():
+    while not embeddingCollection.is_ready():
         sleep(1)
 
 text_splitter = RecursiveCharacterTextSplitter(

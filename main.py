@@ -1,7 +1,7 @@
 from datetime import datetime
 from flask import Flask, render_template
 from flask_socketio import SocketIO, send
-from constants import collection
+from constants import embeddingCollection, questionCollection
 from search import ask
 from os import getenv
 
@@ -17,13 +17,14 @@ def main():
 def about():
     return render_template(
         "about.jinja", 
-        last_update=collection.created_at
+        last_update=embeddingCollection.created_at
     )
 
 @socketio.on("message")
 def handle_message(question):
-    print('received question: ' + question)
     send(ask(question))
+    if questionCollection:
+        questionCollection.add_doc({"question": question})
 
 
 if __name__ == '__main__':
