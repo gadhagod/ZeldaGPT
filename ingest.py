@@ -149,7 +149,7 @@ class Scraper():
         while not links.is_empty():
             curr_link = self._cleanse(links.remove())
             if self.first or (self._is_valid(curr_link) and not self._has_been_scraped(curr_link)):
-                print(f"Scraping {curr_link}...")
+                print(f"Scraping {curr_link} ...")
                 try:
                     soup = self._scrape(curr_link)
                 except exceptions.RequestException as e:

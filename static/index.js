@@ -52,4 +52,4 @@ setInterval(() => {
     } else {
         ellipses.innerText += ".";
     }
-}, 1000);
+}, 150);
