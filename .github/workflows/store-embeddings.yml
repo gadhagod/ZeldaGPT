@@ -16,4 +16,5 @@ jobs:
         run: python3 ingest.py --reset
         env:
           ROCKSET_API_KEY: ${{ secrets.ROCKSET_API_KEY }}
+          ROCKSET_API_SERVER: https://api.rs2.usw2.rockset.com
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
