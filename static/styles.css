@@ -1,5 +1,10 @@
+#question {
+    border-color: darkgray !important;
+    border-width: 0.5px;
+}
+
 .input-group, #answer-container {
-    max-width: 75%;
+    max-width: 75%; 
 }
 
 h1.gold {
@@ -29,4 +34,9 @@ button.gold:hover {
 #star {
     text-align:right;
     margin-right: 8px;
+}
+
+input[type=text][disabled] {
+    background-color: #0000007d !important;
+    color: #00000063 !important;
 }

@@ -8,7 +8,9 @@ socket.on("connect", () => {
     let responseBox = document.getElementById("response");
 
     let ask = () => {
-        let question = document.getElementById("question").value;
+        questionBox.setAttribute("disabled", "");
+        askBtn.setAttribute("disabled", "");
+        let question = questionBox.value;
         socket.send(question);
         thinkingMsg.classList.remove("hidden");
         responseBox.classList.add("hidden");
@@ -19,6 +21,9 @@ socket.on("connect", () => {
         responseBox.innerText = response;
         thinkingMsg.classList.add("hidden");
         responseBox.classList.remove("hidden");
+        questionBox.removeAttribute("disabled");
+        askBtn.removeAttribute("disabled");
+        questionBox.focus();
     };
 
 
