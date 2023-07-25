@@ -2,7 +2,6 @@ var socket = io();
 
 socket.on("connect", () => {
     let askBtn = document.getElementById("ask");
-    let questionBox = document.getElementById("question");
     let answerContainer = document.getElementById("answer-container");
     let thinkingMsg = document.getElementById("thinking");
     let responseBox = document.getElementById("response");
@@ -49,7 +48,26 @@ socket.on("connect", () => {
     console.log("Connected!");
 });
 
+let questionBox = document.getElementById("question");
 var ellipses = document.getElementById("ellipses");
+
+let writeToPlaceholder = (newPlaceholder) => {
+    let removal = setInterval(() => {
+        let currPlaceholder = questionBox.getAttribute("placeholder");
+        if (!currPlaceholder) {
+            clearInterval(removal);
+            let i = 0;
+            let addition = setInterval(() => {
+                if (i >= newPlaceholder.length) {
+                    clearInterval(addition);
+                }
+                questionBox.setAttribute("placeholder", newPlaceholder.substring(0, i));
+                i++;
+            }, 100);
+        }
+        questionBox.setAttribute("placeholder", currPlaceholder.substring(0, currPlaceholder.length - 1));
+    }, 100);
+};
 
 setInterval(() => {
     if (ellipses.innerText.length == 2) {
@@ -58,3 +76,18 @@ setInterval(() => {
         ellipses.innerText += ".";
     }
 }, 150);
+
+let questions = ["Where do I find Hestu in BOTW?", "What is Windblight Ganon's weakness?", "How do I get star fragments in BOTW?"]
+let i = 0;
+let start = setInterval(() => {
+    writeToPlaceholder(questions[i]);
+    clearInterval(start);
+    i++;
+    setInterval(() => {
+        writeToPlaceholder(questions[i]);
+        i++
+        if (i > 2) {
+            i = 0;
+        }
+    }, 8000);
+}, 3000);
