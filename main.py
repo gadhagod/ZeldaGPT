@@ -5,7 +5,7 @@ from os import getenv
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = getenv("SECRET_KEY") or 'secret!'
-socketio = SocketIO(app, async_handlers=True)
+socketio = SocketIO(app, async_handlers=True, cors_allowed_origins="*")
 
 @app.route("/")
 def main():
