@@ -13,7 +13,7 @@ jobs:
       - name: Install requirements
         run: pip install -r requirements.txt
       - name: Generate links
-        run: python3 scripts/ingest.py --reset
+        run: python3 ingest.py --reset
         env:
           ROCKSET_API_KEY: ${{ secrets.ROCKSET_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
