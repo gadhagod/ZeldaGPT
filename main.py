@@ -1,10 +1,11 @@
 from flask import Flask, render_template
 from flask_socketio import SocketIO, send
 from search import ask
+from os import getenv
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'secret!'
-socketio = SocketIO(app)
+app.config['SECRET_KEY'] = getenv("SECRET_KEY") or 'secret!'
+socketio = SocketIO(app, async_handlers=True)
 
 @app.route("/")
 def main():
