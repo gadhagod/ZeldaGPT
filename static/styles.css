@@ -7,8 +7,9 @@
     max-width: 75%; 
 }
 
-h1.gold {
+.display-1 {
     color: gold;
+    text-shadow:  1px 1px 4px gold;
 }
 
 button.gold {
@@ -39,4 +40,15 @@ button.gold:hover {
 input[type=text][disabled] {
     background-color: #0000007d !important;
     color: #00000063 !important;
+}
+
+#about {
+    margin-top: 20px;
+    margin-left: 190px;
+    margin-right: 190px;
+    font-size: larger;
+}
+
+#about-link {
+    margin-left: 25px;
 }

@@ -1,0 +1,78 @@
+<html>
+    <head>
+        <title>ZeldaGPT</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    </head>
+    <body class="bg-secondary">
+        <div class="row mt-3">
+            <div id="about-link" class="col">
+                <a href="/" class="text-dark">Search</a>
+            </div>
+            <div id="star" class="col mr-3">
+                <a class="github-button" href="https://github.com/gadhagod/ZeldaGPT" data-icon="octicon-star">Star</a>
+            </div>
+        </div>
+        
+        <div class="row mt-5">
+            <div class="header text-center col">
+                <p class="display-1 text-center text-light">
+                    <span class="text-warning gold">Zelda</span>GPT
+                </p>
+            </div>
+        </div>
+
+        <div id="about">
+            ZeldaGPT is a free, open-source service that allows you to ask questions about the <i>Legend of Zelda</i> Franchise.
+            This tool was made with the goal of helping players find specific information regarding their Zelda games to enrich their gaming experiences.
+            The AI was last trained public data from <a class="text-dark" href="https://zeldawiki.wiki/wiki/Main_Page" target="_blank">zeldawiki.com</a> on {{ last_update }}.
+            ZeldaGPT is able to answer questions about any Zelda game, from the original released in 1987 to the latest <i>Tears of the Kingdom</i> released in 2023.
+            Because <i>Tears of the Kingdom</i> is relatively new, information regarding the game is limited. 
+            The app's source code can be found on <a class="text-dark" href="https://github.com/gadhagod/ZeldaGPT" target="_blank">GitHub</a>.
+            <br>
+            <br>
+
+            <!--
+            <ul>
+                <li>The Legend of Zelda (1987)</li>
+                <li>The Adventure of Link (1988)</li>
+                <li>A Link to the Past (1992)</li>
+                <li>Link's Awakening (1993)</li>
+                <li>Ocarina of Time (1998)</li>
+                <li>Majora's Mask (2000)</li>
+                <li>Oracle of Seasons (2001)</li>
+                <li>Oracle of Ages (2001)</li>
+                <li>For Swords (2002)</li>
+                <li>The Wind Waker (2003)</li>
+                <li>Four Swords Adventures (2004)</li>
+                <li>The Minish Cap (2005)</li>
+                <li>Twilight Princess (2006)</li>
+                <li>Phantom Hourglass (2007)</li>
+                <li>Spirit Tracks (2009)</li>
+                <li>A Link Between Worlds (2013)</li>
+                <li>Tri Force Heroes (2015)</li>
+                <li>Breath of the Wild (2017)</li>
+                <li>Tears of the Kingdom (2023)</li>
+            </ul>
+            -->
+            Please contact <a class="text-dark" href="mailto:good.aarav@gmail.com">good.aarav@gmail.com</a> to report any bugs or to provide feedback.
+
+        </div>
+
+        <footer class="row fixed-bottom">
+            <hr>
+            <p class="mb-2 text-center">
+                Powered by: 
+                <a class="text-dark" href="https://rockset.com" target="_blank">Rockset</a> 
+                | 
+                <a class="text-dark" href="https://openai.com" target="_blank">OpenAI</a> 
+                | 
+                <a class="text-dark" href="https://zeldawiki.wiki/wiki/Main_Page" target="_blank">ZeldaWiki</a>
+            </p>
+        </footer>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+        <script async defer src="https://buttons.github.io/buttons.js"></script>
+        <script src="{{ url_for('static', filename='index.js') }}"></script>
+    </body>
+</html>

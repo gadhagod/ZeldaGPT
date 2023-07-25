@@ -10,7 +10,7 @@ pip3 install -r requirements.txt
 
 ## Data ingestion
 ```
-python3 scripts/ingest.py
+python3 ingest.py
 ```
 
 ## Starting the server
