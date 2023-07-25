@@ -42,7 +42,7 @@ openai = OpenAIEmbeddings(
 store = RocksetStore(
     rockset,
     openai,
-    collection.name,
+    f"\"{collection.name}\"",
     "text",
     "embedding"
 )
