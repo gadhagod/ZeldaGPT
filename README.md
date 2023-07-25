@@ -1,4 +1,5 @@
 # Zelda GPT
+Zelda lookup site, available at [zeldagpt-558d219d8755.herokuapp.com](https://zeldagpt-558d219d8755.herokuapp.com).
 
 ## Setup
 ```bash
