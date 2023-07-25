@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <title>ZeldaGPT</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    </head>
+    <body class="bg-secondary">
+        <div id="star" class="mr-3 mt-3">
+            <a class="github-button" href="https://github.com/gadhagod/ZeldaGPT" data-icon="octicon-star">Star</a>
+        </div>
+        
+        <div class="header mt-5 text-center">
+            <p class="display-1 text-center text-light">
+                <span class="text-warning gold">Zelda</span>GPT
+            </p>
+        </div>
+
+        <div class="input-group input-group-lg mx-auto mt-5">
+            <button disabled class="btn bg-dark btn-outline-secondary text-light" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                </svg>
+            </button>
+            <input type="text" class="bg-dark text-white form-control" placeholder="Ask a question..." type="text" id="question" autofocus>
+            <button id="ask" class="btn btn-outline-secondary text-dark gold" type="button" disabled>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
+                </svg>
+            </button>
+        </div>
+        
+        <div id="answer-container" class="form-control mt-5 mx-auto bg-dark hidden" id="answer">
+            <p id="thinking" class="hidden text-secondary">
+                <!-- 🧠🤖 -->Give me a moment to think.<span id="ellipses"></span>
+            </p>
+            <p id="response" class="hidden text-white-50"></p>
+        </div>
+
+        <!-- Place this tag where you want the button to render. -->
+
+        <footer class="fixed-bottom text-center">
+            <p class="mb-2">Built with ❤️ by Aarav Borthakur</p>
+        </footer>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+        <script async defer src="https://buttons.github.io/buttons.js"></script>
+        <script src="{{ url_for('static', filename='index.js') }}"></script>
+    </body>
+</html>

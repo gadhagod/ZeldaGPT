@@ -1,45 +1,39 @@
-from sys import argv
-from time import sleep
 from os import getenv
-from rockset import RocksetClient, Regions, exceptions
+from rockset import RocksetClient, exceptions
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import Rockset as RocksetStore
 from sql import ingest_tranformation
 
+rockset_api_server = getenv("ROCKSET_API_SERVER")
 rockset_api_key = getenv("ROCKSET_API_KEY")
 openai_api_key = getenv("OPENAI_API_KEY")
 
-rockset = RocksetClient(Regions.rs2, rockset_api_key)
+rockset = RocksetClient(rockset_api_server, rockset_api_key)
 
-def collection_exists():
-    try:
-        rockset.Collections.get(collection="hyrule-compendium-ai")
-    except exceptions.NotFoundException:
-        return False
-    return True
-
-def collection_is_ready():
-    return rockset.Collections.get(collection="hyrule-compendium-ai").data.status == "READY"
-
-def delete_collection():
-    print("Deleting collection \"commons.hyrule-compendium-ai\"")
-    rockset.Collections.delete(collection="hyrule-compendium-ai")
+class Collection:
+    def __init__(self, workspace, name):
+        self.workspace = workspace
+        self.name = name
     
-def create_collection():
-    print("Creating collection \"commons.hyrule-compendium-ai\"")
-    rockset.Collections.create_s3_collection(name="hyrule-compendium-ai", field_mapping_query=ingest_tranformation)
+    def exists(self):
+        try:
+            rockset.Collections.get(collection=self.name)
+        except exceptions.NotFoundException:
+            return False
+        return True
 
-if "--reset" in argv:
-    if collection_exists():
-        delete_collection()
-        while collection_exists():
-            sleep(1)
-            
-    create_collection()
-    while not collection_exists():
-        sleep(1)
-    while not collection_is_ready():
-        sleep(1)
+    def is_ready(self):
+        return rockset.Collections.get(collection=self.name).data.status == "READY"
+
+    def delete(self):
+        print(f"Deleting collection \"{self.workspace}.{self.name}\"")
+        rockset.Collections.delete(collection=self.name)
+        
+    def create(self):
+        print(f"Creating collection \"{self.workspace}.{self.name}\"")
+        rockset.Collections.create_s3_collection(name=self.name, field_mapping_query=ingest_tranformation)
+
+collection = Collection("commons", "hyrule-compendium-ai")
 
 openai = OpenAIEmbeddings(
     openai_api_key=openai_api_key,
@@ -48,7 +42,7 @@ openai = OpenAIEmbeddings(
 store = RocksetStore(
     rockset,
     openai,
-    "hyrule-compendium-ai",
+    collection.name,
     "text",
     "embedding"
 )

@@ -1,9 +1,21 @@
-from requests import get, exceptions
-from bs4 import BeautifulSoup
+from sys import argv
+from time import sleep
 from requests import get, exceptions
 from bs4 import BeautifulSoup
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from constants import store, rockset as rs
+from constants import store, collection, rockset as rs
+
+if "--reset" in argv:
+    if collection.exists():
+        collection.delete()
+        while collection.exists():
+            sleep(1)
+            
+    collection.create()
+    while not collection.exists():
+        sleep(1)
+    while not collection.is_ready():
+        sleep(1)
 
 text_splitter = RecursiveCharacterTextSplitter(
     chunk_size = 1000,
@@ -22,6 +34,14 @@ class LinkQueue():
         self.first = LinkNode(init_value, None) if init_value is not None else None
         self.last = self.first
         
+    def _add(self, link):
+        node = LinkNode(link)
+        if self.first is None and self.last is None: # empty queue
+            self.first = node
+        else:
+            self.last.next = node
+        self.last = node
+        
     def remove(self):
         if self.first is self.last: # one item in queue
             link = self.first.link
@@ -31,21 +51,13 @@ class LinkQueue():
         prev_first = self.first
         self.first = self.first.next
         return prev_first.link
-    
-    def add(self, link):
-        node = LinkNode(link)
-        if self.first is None and self.last is None: # empty queue
-            self.first = node
-        else:
-            self.last.next = node
-        self.last = node
         
     def is_empty(self):
         return self.first is None
     
     def add_elem_links(self, a_elems):
         for i in a_elems:
-            self.add(i["href"])
+            self._add(i["href"])
     
     def __str__(self) -> str:
         if self.is_empty():
@@ -97,11 +109,14 @@ class Scraper():
     def _scrape(self, link):
         soup = BeautifulSoup(get(link).text, "html.parser")
 
-        if self._is_category(link): # we do not need to generate embeddings for this page
+        if self._is_category(link):
+            # we do not need to generate embeddings for this page,
+            # but we still need to add it to the collection to 
+            # make sure we don't scrape it again
             rs.Documents.add_documents(
                 collection="hyrule-compendium-ai",
                 data=[{
-                    "source": link, # make sure we do not scrape this page again
+                    "source": link, 
                     "embedding": None
                 }]
             )
