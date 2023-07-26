@@ -3,7 +3,7 @@ from datetime import datetime
 from rockset import RocksetClient, exceptions
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import Rockset as RocksetStore
-from sql import ingest_tranformation
+from queries import ingest_tranformation
 
 is_production = getenv("ENVIRONMENT") == "prod"
 rockset_api_server = getenv("ROCKSET_API_SERVER")
@@ -33,7 +33,7 @@ class Collection:
         
     def create(self):
         print(f"Creating collection \"{self.workspace}.{self.name}\"")
-        rockset.Collections.create_s3_collection(name=self.name, field_mapping_query=ingest_tranformation)
+        rockset.Collections.create_s3_collection(name=self.name, field_mapping_query=ingest_tranformation())
         
     def add_doc(self, doc):
         rockset.Documents.add_documents(
