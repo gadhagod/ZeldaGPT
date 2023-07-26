@@ -20,7 +20,7 @@ qa_chain = RetrievalQA.from_chain_type(
 )
 
 def ask(question):
-    return qa_chain({"query": f"""Answer my question based on the given context and be sure to make your answer as long as possible. Question: {question}"""})["result"]
+    return qa_chain({"query": f"""The context given relates to the "Legend of Zelda" game series. Answer my question based on the given context and be sure to make your answer as long as possible. Question: {question}"""})["result"]
 
 if __name__ == "__main__":
     while True:
