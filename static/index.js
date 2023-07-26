@@ -1,4 +1,5 @@
 var socket = io();
+var isThinking = false;
 
 socket.on("connect", () => {
     let askBtn = document.getElementById("ask");
@@ -7,6 +8,7 @@ socket.on("connect", () => {
     let responseBox = document.getElementById("response");
 
     let ask = () => {
+        isThinking = true;
         questionBox.setAttribute("disabled", "");
         askBtn.setAttribute("disabled", "");
         let question = questionBox.value;
@@ -23,6 +25,7 @@ socket.on("connect", () => {
         questionBox.removeAttribute("disabled");
         askBtn.removeAttribute("disabled");
         questionBox.focus();
+        isThinking = false;
     };
 
 
@@ -35,7 +38,7 @@ socket.on("connect", () => {
     });
 
     questionBox.addEventListener("keypress", (event) => {
-        if (event.key === "Enter") {
+        if (event.key === "Enter" && !isThinking) {
             event.preventDefault();
             ask();
         }

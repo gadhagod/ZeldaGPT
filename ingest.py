@@ -4,6 +4,7 @@ from requests import get, exceptions
 from bs4 import BeautifulSoup
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from constants import store, embeddingCollection, rockset as rs
+from queries import link_exists as link_exists_query
 
 if "--reset" in argv:
     if embeddingCollection.exists():
@@ -113,13 +114,10 @@ class Scraper():
             # we do not need to generate embeddings for this page,
             # but we still need to add it to the collection to 
             # make sure we don't scrape it again
-            rs.Documents.add_documents(
-                collection="hyrule-compendium-ai",
-                data=[{
-                    "source": link, 
-                    "embedding": None
-                }]
-            )
+            embeddingCollection.add_doc({
+                "source": link, 
+                "embedding": None
+            })
         else:
             page_title = soup.find("title").get_text()
             page_text = soup.find(class_="page__main").get_text().replace("\n\n", "\n")
@@ -132,18 +130,14 @@ class Scraper():
         return soup
     
     def _has_been_scraped(self, link):
-        return len(rs.sql("""
-            SELECT
-                1
-            FROM
-                commons."hyrule-compendium-ai"
-            WHERE
-                source = :link
-            """, 
-            params={"link": str(link)}).results
+        return len(
+            rs.Queries.query(
+                self.link_exists(link)
+            ).results
         ) > 0
     
     def __init__(self):
+        self.link_exists = link_exists_query
         self.first = True
         links = LinkQueue("https://zelda.fandom.com/wiki/Main_Page")
         while not links.is_empty():
