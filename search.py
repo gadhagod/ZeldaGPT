@@ -12,7 +12,7 @@ chat_bot(
 )
 
 retriever = store.as_retriever()
-retriever.search_kwargs = {"where_str": "embedding IS NOT NULL"}
+retriever.search_kwargs = {"where_str": "embedding IS NOT NULL", "k": 13}
 
 qa_chain = RetrievalQA.from_chain_type(
     chat_bot, 
