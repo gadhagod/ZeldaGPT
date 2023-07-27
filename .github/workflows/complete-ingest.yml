@@ -1,4 +1,4 @@
-name: Store embeddings
+name: Complete ingest
 on:
   workflow_dispatch:
 jobs:
