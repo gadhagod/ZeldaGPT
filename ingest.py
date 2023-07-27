@@ -101,31 +101,36 @@ class Scraper():
             not "Artwork" in link and 
             not "Guidelines" in link and 
             not "Help" in link and 
-            not "Template" in link
+            not "Template" in link and 
+            not "Community:" in link and
+            not ".png" in link and
+            not ".jpg" in link
         )
         
     def _is_category(self, link):
         return "Category:" in link
     
-    def _scrape(self, link):
+    def _scrape(self, link, add_embedding):
         soup = BeautifulSoup(get(link).text, "html.parser")
-
-        if self._is_category(link):
-            # we do not need to generate embeddings for this page,
-            # but we still need to add it to the collection to 
-            # make sure we don't scrape it again
-            embeddingCollection.add_doc({
-                "source": link, 
-                "embedding": None
-            })
-        else:
-            page_title = soup.find("title").get_text()
-            page_text = soup.find(class_="page__main").get_text().replace("\n\n", "\n")
-            docs = text_splitter.create_documents([page_text],[{"source": link}])
-            store.add_texts(
-                texts=[f"This information is about {page_title}. {doc.page_content}" for doc in docs],
-                metadatas=[doc.metadata for doc in docs]
-            )
+        
+        if add_embedding:
+            print(f"Adding document for {link}")
+            if self._is_category(link):
+                # we do not need to generate embeddings for this page,
+                # but we still need to add it to the collection to 
+                # make sure we don't scrape it again
+                embeddingCollection.add_doc({
+                    "source": link, 
+                    "embedding": None
+                })
+            else:
+                page_title = soup.find("title").get_text()
+                page_text = soup.find(class_="page__main").get_text().replace("\n\n", "\n")
+                docs = text_splitter.create_documents([page_text],[{"source": link}])
+                store.add_texts(
+                    texts=[f"This information is about {page_title}. {doc.page_content}" for doc in docs],
+                    metadatas=[doc.metadata for doc in docs]
+                )
 
         return soup
     
@@ -141,18 +146,21 @@ class Scraper():
         self.first = True
         links = LinkQueue()
         links.add_elem_links(starting_links)
+        i = len(starting_links)
         while not links.is_empty():
             curr_link = self._cleanse(links.remove())
             if self.first or (self._is_valid(curr_link) and not self._has_been_scraped(curr_link)):
-                print(f"Scraping {curr_link} ...")
                 try:
-                    soup = self._scrape(curr_link)
+                    soup = self._scrape(curr_link, not self.first)
                 except exceptions.RequestException as e:
-                    print(f"Skipping {curr_link}: {e}")    
-                    return # skip
+                    continue # skip
                 
                 links.add_elem_links(soup.find_all("a", {"href": lambda value: value}))
-            self.first = False
+            else:
+                print(f"skipping {curr_link}")
+            i = i - 1 
+            if i <= 1:
+                self.first = False
 
 if __name__ == "__main__":
     Scraper(["https://zelda.fandom.com/wiki/Main_Page"])

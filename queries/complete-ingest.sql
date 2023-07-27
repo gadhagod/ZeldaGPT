@@ -9,5 +9,5 @@ FROM (
         _event_time
     DESC
     LIMIT
-        1000
+        :lim
 ) s

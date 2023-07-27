@@ -25,7 +25,12 @@ def link_exists(link: str) -> QueryRequestSql:
     )
     
 _complete_ingest = get_sql("complete-ingest.sql")
-def complete_ingest() -> QueryRequestSql:
+def complete_ingest(limit: int) -> QueryRequestSql:
     return QueryRequestSql(
-        query=_complete_ingest
+        query=_complete_ingest,
+        parameters=[{
+            "name": "lim",
+            "type": "int",
+            "value": str(limit)
+        }]
     )
