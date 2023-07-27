@@ -7,6 +7,10 @@
     max-width: 75%; 
 }
 
+#answer-container p {
+    font-size: 10px;
+}
+
 .display-1 {
     color: gold;
     text-shadow:  1px 1px 4px gold;
@@ -44,11 +48,37 @@ input[type=text][disabled] {
 
 #about {
     margin-top: 20px;
-    margin-left: 190px;
-    margin-right: 190px;
-    font-size: larger;
+    margin-left: 30px;
+    margin-right: 30px;
+    font-size: small;
 }
 
 #about-link {
     margin-left: 25px;
+}
+
+p {
+    font-size: small;
+}
+
+@media (min-width: 820px) { /* Large devices */
+    .input-group {
+        margin-top: 1.5rem !important;
+    }
+
+    .input-group>.btn, .input-group>.form-control, .input-group>.form-select, .input-group>.input-group-text {
+        padding: 0.5rem 1rem !important;
+        font-size: 1.25rem !important;
+    }
+
+    #answer-container p {
+        font-size: medium;
+    }
+
+    #about {
+        margin-top: 20px;
+        margin-left: 190px;
+        margin-right: 190px;
+        font-size: larger;
+    }
 }
