@@ -7,7 +7,7 @@ def get_sql(file_name: str) -> str:
         join(dirname(__file__), file_name)
     ).read()
 
-_ingest_tranformation = get_sql("ingest-tranformation.sql")
+_ingest_tranformation = get_sql("ingest-transformation.sql")
 def ingest_tranformation() -> FieldMappingQuery:
     return FieldMappingQuery(
         sql=_ingest_tranformation
@@ -17,9 +17,15 @@ _link_exists = get_sql("link-exists.sql")
 def link_exists(link: str) -> QueryRequestSql:
     return QueryRequestSql(
         query=_link_exists,
-        params={
+        parameters=[{
             "name": "link",
             "type": "string",
             "value": str(link)
-        }
+        }]
+    )
+    
+_complete_ingest = get_sql("complete-ingest.sql")
+def complete_ingest() -> QueryRequestSql:
+    return QueryRequestSql(
+        query=_complete_ingest
     )

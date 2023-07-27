@@ -58,7 +58,7 @@ class LinkQueue():
     
     def add_elem_links(self, a_elems):
         for i in a_elems:
-            self._add(i["href"])
+            self._add(i if i.__class__ is str else i["href"])
     
     def __str__(self) -> str:
         if self.is_empty():
@@ -132,14 +132,15 @@ class Scraper():
     def _has_been_scraped(self, link):
         return len(
             rs.Queries.query(
-                self.link_exists(link)
+                sql=self.link_exists(link)
             ).results
         ) > 0
     
-    def __init__(self):
+    def __init__(self, starting_links):
         self.link_exists = link_exists_query
         self.first = True
-        links = LinkQueue("https://zelda.fandom.com/wiki/Main_Page")
+        links = LinkQueue()
+        links.add_elem_links(starting_links)
         while not links.is_empty():
             curr_link = self._cleanse(links.remove())
             if self.first or (self._is_valid(curr_link) and not self._has_been_scraped(curr_link)):
@@ -153,4 +154,5 @@ class Scraper():
                 links.add_elem_links(soup.find_all("a", {"href": lambda value: value}))
             self.first = False
 
-Scraper()
+if __name__ == "__main__":
+    Scraper(["https://zelda.fandom.com/wiki/Main_Page"])
