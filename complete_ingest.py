@@ -3,5 +3,5 @@ from constants import rockset
 from ingest import Scraper
 
 Scraper(
-    [res["source"] for res in rockset.Queries.query(sql=complete_ingest(1000)).results ]
+    [res["source"] for res in rockset.Queries.query(sql=complete_ingest(100)).results ]
 )
