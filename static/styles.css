@@ -57,7 +57,9 @@ button.gold:hover {
     margin-right: 8px;
 }
 
-input[type=text][disabled] {
+input[type=text][readonly] {
+    -webkit-text-fill-color: black;
+    opacity: 1; /* required on iOS */
     background-color: #0000007d !important;
     color: #00000063 !important;
 }

@@ -75,7 +75,7 @@ socket.on("connect", async () => {
     let ask = async () => {
         questionBox.blur();
         isThinking = true;
-        questionBox.setAttribute("disabled", "");
+        questionBox.setAttribute("readonly", "");
         askBtn.setAttribute("disabled", "");
         let question = questionBox.value;
         socket.send(question);
@@ -101,7 +101,7 @@ socket.on("connect", async () => {
 
         answerContainer.classList.replace("hide", "show");
         
-        questionBox.removeAttribute("disabled");
+        questionBox.removeAttribute("readonly");
         askBtn.removeAttribute("disabled");
         questionBox.focus();
         isThinking = false;
