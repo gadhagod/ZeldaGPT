@@ -64,8 +64,6 @@ class PlaceholderRotator {
     };
 }
 
-
-
 socket.on("connect", async () => {
     let askBtn = document.getElementById("ask");
     let answerContainer = document.getElementById("answer-container");
@@ -75,6 +73,7 @@ socket.on("connect", async () => {
     let thinkingLoader = document.getElementById("thinking-loader");
 
     let ask = async () => {
+        questionBox.blur();
         isThinking = true;
         questionBox.setAttribute("disabled", "");
         askBtn.setAttribute("disabled", "");
