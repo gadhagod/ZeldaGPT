@@ -11,10 +11,6 @@ body {
     max-width: 75%; 
 }
 
-#answer-container p {
-    font-size: 10px;
-}
-
 .display-1 {
     color: gold;
     text-shadow:  1px 1px 4px gold;
@@ -88,13 +84,13 @@ input[type=text][readonly] {
     font-size: 15px;
 }
 
-p {
-    font-size: smaller;
+#response {
+    font-size: small;
 }
 
 footer p {
     color: black;
-    font-size: 10px;
+    font-size: 10px !important;
 }
  
 a {
@@ -138,11 +134,11 @@ footer {
     }
 
     footer p {
-        font-size: small;
+        font-size: small !important;
     }
-
-    #answer-container p {
-        font-size: medium;
+    
+    #response {
+        font-size: medium !important;
     }
 
     #about {
