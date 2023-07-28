@@ -1,3 +1,7 @@
+body {
+    overflow-x: hidden;
+}
+
 #question {
     border-color: darkgray !important;
     border-width: 0.5px;
@@ -80,12 +84,20 @@ input[type=text][readonly] {
     margin-left: 25px;
 }
 
-p {
-    font-size: small;
+#about-link a {
+    font-size: 15px;
 }
 
-footer p, a {
+p {
+    font-size: smaller;
+}
+
+footer p {
+    color: black;
     font-size: 10px;
+}
+ 
+a {
     color: black;
 }
 
@@ -142,5 +154,9 @@ footer {
 
     #thinking-message {
         font-size: larger;
+    }
+
+    #about-link a {
+        font-size: large;
     }
 }
