@@ -1,6 +1,6 @@
 SELECT
     1
 FROM
-    commons."hyrule-compendium-ai"
+    zeldagpt
 WHERE
     source = :link

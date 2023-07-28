@@ -46,7 +46,7 @@ class Collection:
         return datetime.strptime(rockset.Collections.get(collection=self.name).data.created_at, "%Y-%m-%dT%H:%M:%SZ").strftime("%x")
     
 
-embeddingCollection = Collection("commons", "hyrule-compendium-ai")
+embeddingCollection = Collection("commons", "zeldagpt")
 questionCollection = Collection("commons", "zeldagpt-questions") if is_production else None
 
 openai = OpenAIEmbeddings(
@@ -56,7 +56,7 @@ openai = OpenAIEmbeddings(
 store = RocksetStore(
     rockset,
     openai,
-    f"{embeddingCollection.name}",
+    embeddingCollection.name,
     "text",
     "embedding"
 )

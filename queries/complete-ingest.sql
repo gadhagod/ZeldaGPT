@@ -4,7 +4,7 @@ FROM (
     SELECT 
         source
     FROM
-        commons."hyrule-compendium-ai"
+        zeldagpt
     ORDER BY
         _event_time
     DESC
