@@ -82,13 +82,15 @@ p {
     font-size: small;
 }
 
-footer p {
+footer p, a {
     font-size: 10px;
+    color: black;
 }
 
 footer {
     border-top: 0.5px solid #4a4a4afc;
     padding-top: 4px;
+    background-color: #6b6d6f;
 }
 
 .spinner-border {
