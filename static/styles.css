@@ -14,6 +14,9 @@
 .display-1 {
     color: gold;
     text-shadow:  1px 1px 4px gold;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
 }
 
 button.gold {
@@ -28,8 +31,21 @@ button.gold:hover {
     background-color: gold
 }
 
+.show {
+    transition: opacity 300ms;
+}
+
+.hide {
+    opacity: 0;
+    transition: opacity 300ms;
+}
+
 .hidden {
-    display: none;
+    display: none !important;
+}
+
+.hidden>* {
+    display: none !important;
 }
 
 .showing {
@@ -44,6 +60,11 @@ button.gold:hover {
 input[type=text][disabled] {
     background-color: #0000007d !important;
     color: #00000063 !important;
+}
+
+.input-group {
+    margin-left: 100px;
+    margin-right: 8px;
 }
 
 #about {
@@ -61,6 +82,35 @@ p {
     font-size: small;
 }
 
+footer p {
+    font-size: 10px;
+}
+
+footer {
+    border-top: 0.5px solid #4a4a4afc;
+    padding-top: 4px;
+}
+
+.spinner-border {
+    width: 7rem;
+    height: 7rem;
+}
+
+#thinking-message {
+    margin-top: 12rem;
+    font-size: medium;
+}
+
+.spinner-grow {
+    animation-duration: .6s;
+    width: 7rem;
+    height: 7rem;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
 @media (min-width: 820px) { /* Large devices */
     .input-group {
         margin-top: 1.5rem !important;
@@ -71,6 +121,10 @@ p {
         font-size: 1.25rem !important;
     }
 
+    footer p {
+        font-size: small;
+    }
+
     #answer-container p {
         font-size: medium;
     }
@@ -79,6 +133,10 @@ p {
         margin-top: 20px;
         margin-left: 190px;
         margin-right: 190px;
+        font-size: larger;
+    }
+
+    #thinking-message {
         font-size: larger;
     }
 }
