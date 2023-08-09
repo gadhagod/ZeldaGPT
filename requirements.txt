@@ -26,7 +26,7 @@ importlib-metadata==6.8.0
 importlib-resources==6.0.0
 itsdangerous==2.1.2
 Jinja2==3.1.2
--e git+https://github.com/gadhagod/langchain.git@539672a7fd2bf5c39013859205decd46d4427a29#egg=langchain
+-e git+https://github.com/gadhagod/langchain.git@rockset-raise-query-error#egg=langchain&subdirectory=libs/langchain
 langsmith==0.0.20
 limits==3.5.0
 markdown-it-py==3.0.0
