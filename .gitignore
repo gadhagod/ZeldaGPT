@@ -2,3 +2,4 @@ env
 links.txt
 links-saved.txt
 __pycache__
+migrate_collection.py

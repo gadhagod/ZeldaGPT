@@ -23,7 +23,7 @@
             </div>
         </div>
 
-        <p id="about">
+        <p class="about">
             ZeldaGPT is a free, open-source service that allows you to ask questions about the <i>Legend of Zelda</i> Franchise.
             This tool was made with the goal of helping players find specific information regarding Zelda games to enrich the gaming experience.
             The AI was last trained on <a class="text-dark" href="https://zeldawiki.wiki/wiki/Main_Page" target="_blank">zeldawiki.com</a> on {{ last_update }}.
@@ -32,9 +32,24 @@
             <br>
             <br>
 
-            The best answers are generated when the desired game is specified and all words are spelled correctly. Because <i>Tears of the Kingdom</i> is relatively new, information regarding the game is limited. 
+            How to elicit the best responses:
+            <ul class="about">
+                <li>Specify the target game</li>
+                <li>Spell all words correctly</li>
+                <li>Make your question as specific as possible</li>
+            </ul>
 
-            <br><br>
+            <span class="about">Known limitations:</span>
+            <ul class="about">
+                <li>Because <i>Tears of the Kingdom</i> is relatively new, information regarding the game is limited.</li>
+                <li>During times of high traffic response latency can reach 10+ seconds.</li>
+                <li>
+                    Because of resource limitations, the AI is best trained on recent games (like BOTW). 
+                    It may not know specific details about very early games.
+                </li>
+            </ul>
+
+            <br>
 
             <!--
             <ul>
@@ -59,7 +74,9 @@
                 <li>Tears of the Kingdom (2023)</li>
             </ul>
             -->
-            Please contact <a class="text-dark" href="mailto:good.aarav@gmail.com">good.aarav@gmail.com</a> to report any bugs or to provide feedback.
+            <span class="about">
+                Please contact <a class="text-dark" href="mailto:good.aarav@gmail.com">good.aarav@gmail.com</a> to report any bugs or to provide feedback.
+            </span>
         </p>
 
         <br><br>
