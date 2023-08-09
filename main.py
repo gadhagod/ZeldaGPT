@@ -22,9 +22,20 @@ def about():
 
 @socketio.on("message")
 def handle_message(question):
-    send(ask(question))
+    try:
+        answer = ask(question)
+        error = False
+    except Exception as e:
+        print(e)
+        answer = "I'm sorry. An internal error occurred and your request could not be processed; by brain seems to be damaged! Please notify good.aarav@gmail.com."
+        error = True
+    send(answer)
     if questionCollection:
-        questionCollection.add_doc({"question": question})
+        questionCollection.add_doc({
+            "question": question,
+            "answer": answer,
+            "error": error
+        })
 
 
 if __name__ == '__main__':
