@@ -143,8 +143,8 @@ socket.on("connect", async () => {
 let questionBox = document.getElementById("question");
 var ellipses = document.getElementById("ellipses");
 let placeholders = [
-    "defeat Thunderblight Ganon in BOTW?", 
     "complete the Etsu Korima Shrine in BOTW?", 
+    "defeat Thunderblight Ganon in BOTW?", 
     "get the Spring-Loaded Hammer in BOTW?"
 ]
 
